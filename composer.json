@@ -1,5 +1,5 @@
 {
-    "name": "vulnerable-php",
+    "name": "cdefense/vulnerable-php",
     "repositories": [],
     "require": {
         "php": ">=7.3.0",
