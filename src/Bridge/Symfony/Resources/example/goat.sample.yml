@@ -1,0 +1,108 @@
+goat:
+    normalization:
+        #
+        # PHP native type to normalized type name
+        #
+        # This is one very important yet missing symfony/serializer feature:
+        #
+        #   - While you code will evolve upon time passing, at some point you
+        #     will eventually end up renaming your classes, or moving them
+        #     around in other namespaces, this allows you to map legacy names.
+        # 
+        #   - While your platform evolve, and you start plugging new external
+        #     components on the same message broker, you may want at some point
+        #     want to normalize event names to a semantic business-relative
+        #     codified names.
+        #
+        # In both cases, it decorates the symfony/serializer component and
+        # transparently convert incomming normalized names to PHP native types
+        # to avoid it exploding upon missing classes. It also removes you the
+        # pain of developping custom normalizers after each code modification
+        # you do.
+        #
+        # This maps incomming normalized names to PHP types, but it also serve
+        # the same purpose the other way arround, you MUST NOT put duplicates
+        # in there, use the 'aliases' option key for duplicates.
+        #
+        map:
+            my_app.normalized_name: Php\Native\Type
+            my_app.other_normalized_name: Php\Other\Native\Type
+
+        #
+        # Whereas each PHP native type may have only one valid normalized name
+        # at a single point in time.
+        #
+        aliases:
+            Php\Legacy\Name: Php\Native\Type
+            Php\EvenMoreLegacy\Name: Php\Native\Type
+            my_app.legacy_normalized_name: Php\Native\Type
+            my_app.other_legacy_normalized_name: my_app.normalized_name
+
+    domain:
+        #
+        # Enable the domain features (event dispatcher).
+        #
+        enabled: true
+
+        #
+        # Enable the event store, plugged over the event dispatcher and Symfony
+        # messenger, which will log all messages.
+        #
+        event_store: true
+
+        #
+        # Enable the lock service that locks mutually exclusive event processing
+        # within the messenger bus. This is compatible with PostgreSQL >= 9 only.
+        #
+        lock_service: true
+
+    monolog:
+        #
+        # Registers a custom monolog  formatter that will add process PID to
+        # log output lines.
+        #
+        log_pid: true
+
+        #
+        # Force monolog to include stack traces into logs when appliable.
+        # Set this to true implies we harcode within container configuration the
+        # \Monolog\Formatter\LineFormatter::includeStacktraces() method call to
+        # enable exception stack trace collection.
+        #
+        always_log_stacktrace: false
+
+    preferences:
+        #
+        # Preferences - a key-value/registry like user configuration storage
+        # that restitutes values as environement variable in your container.
+        #
+        enabled: true
+
+        #
+        # Define a schema.
+        #
+        # If you remove this, all repositories will work in YOLO mode, meaning
+        # nothing will ever be validated not even value types, you may then use
+        # this API for arbitrary value storage.
+        #
+        # In the opposite, by defining a schema, you enable type and allowed
+        # values validation for what is going to be stored, and also enable
+        # the PreferenceSchema component in your container, allowing you to
+        # dynamically build forms.
+        #
+        schema:
+            #
+            # Complete variable definition example.
+            #
+            app_domain_some_variable:
+                label: Some variable
+                description: Uncheck this value to deactive this feature
+                type: bool
+                collection: false
+                default: true
+
+            #
+            # Incomplete (using defaults) variable definition example.
+            #
+            app_other_variable:
+                # ... all values here are optional

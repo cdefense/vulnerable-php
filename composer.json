@@ -1,24 +1,95 @@
 {
-    "name": "cdefense/vulnerable-php",
-    "repositories": [],
-    "require": {
-        "php": ">=7.3.0",
-        "phpunit/php-timer": "^3.1"
-    },
-    "require-dev": {
-        "composer/composer": "dev-master"
-    },
-    "autoload": {
-        "psr-4": {
-            "CDPHPGoat\\" : "src/"
+    "name" : "makinacorpus/goat",
+    "type": "library",
+    "description": "Event store, domain repositories and preference API for PHP, with a Symfony bundle",
+    "keywords": ["orm", "postgresql", "mysql", "database", "symfony", "pdo", "preferences", "configuration"],
+    "homepage": "http://github.com/makinacorpus/php-goat",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name" : "Pierre RINEAU",
+            "email" : "pierre.rineau@processus.org"
         },
-        "classname": {
-          "PHP_Timer": "src/"
+        {
+            "name" : "Régis LEROY",
+            "email" : "regis.leroy@makina-corpus.com",
+            "role": "Developer"
+        },
+        {
+            "name" : "Simon MELLERIN",
+            "email" : "simon.mellerin@makina-corpus.com",
+            "role": "Developer"
+        },
+        {
+            "name" : "Makina Corpus",
+            "homepage" : "https://www.makina-corpus.com"
+        }
+    ],
+    "minimum-stability" : "dev",
+    "prefer-stable" : true,
+    "autoload" : {
+        "psr-4" : {
+            "Goat\\Bridge\\Symfony\\" : "src/Bridge/Symfony/",
+            "Goat\\Domain\\" : "src/Domain/",
+            "Goat\\Hydrator\\" : "src/Hydrator/",
+            "Goat\\Preferences\\" : "src/Preferences"
+        },
+        "classmap": [
+            "src/Domain/Event/Error.php",
+            "src/Domain/Event/Message.php",
+            "src/Domain/EventStore/Mapping.php",
+            "src/Domain/Generator/MessageDocumentation.php",
+            "src/Preferences/Domain/Handler.php",
+            "src/Preferences/Domain/Message.php",
+            "src/Preferences/Domain/Model.php",
+            "src/Preferences/Domain/Repository.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Goat\\Bridge\\Symfony\\Tests\\": "tests/Bridge/Symfony/",
+            "Goat\\Domain\\Tests\\": "tests/Domain/",
+            "Goat\\Preferences\\Tests\\": "tests/Preferences/"
         }
     },
-    "scripts": {
-        "hello": [
-            "php src/HelloWorld/greetings.php"
-        ]
+    "replace": {
+        "makinacorpus/generated-hydrator": "*",
+        "makinacorpus/goat-bundle": "*",
+        "makinacorpus/goat-domain": "*",
+        "makinacorpus/goat-hydrator": "*",
+        "makinacorpus/goat-preferences": "*"
+    },
+    "require" : {
+        "makinacorpus/goat-query": "^2.1.1",
+        "php" : ">=7.4",
+        "psr/log": "^1.0",
+        "ramsey/uuid": "^3.8 || ^4"
+    },
+    "suggest" : {
+        "doctrine/dbal": "For query builder usage over a Doctrine PDO connection",
+        "doctrine/doctrine-bundle": "For query builder usage over a Doctrine PDO connection",
+        "makinacorpus/goat-query": "For using PostgreSQL implementations of everything",
+        "ocramius/generated-hydrator": "For using the makinacorpus/goat-hydrator replacement",
+        "psr-log": "^1.0",
+        "symfony/form": "For preferences form widget usage",
+        "symfony/messenger": "For domain's event store and message publisher usage",
+        "symfony/serializer-pack": "For better object serialisation and normalisation within the bus"
+    },
+    "require-dev" : {
+        "makinacorpus/calista-core": "^1.0",
+        "makinacorpus/generated-hydrator-bundle": "^1.0@alpha",
+        "makinacorpus/goat-query-bundle": "^2.0",
+        "phpunit/phpunit" : "7.*",
+        "symfony/config": "^5.0",
+        "symfony/console": "^4.0 || ^5.0",
+        "symfony/dependency-injection": "^4.4 || ^5.0",
+        "symfony/event-dispatcher": "^4.4 || ^5.0",
+        "symfony/form": "^4 || ^5.0",
+        "symfony/http-kernel": "^4.4 || ^5.0",
+        "symfony/messenger": "^5.0",
+        "symfony/monolog-bundle": "^3.5",
+        "symfony/serializer-pack": "^1.0|^5.0",
+        "symfony/yaml": "^4.2 || ^5.0",
+        "twig/twig": "^2.5 || ^3.0"
     }
 }
