@@ -32,6 +32,8 @@ jobs:
       run: composer install --prefer-dist --no-progress --no-suggest
 
     - name: Cloud Defense Scan
+      env:
+        SCA_SCAN_URL: https://cd-scanner.herokuapp.com/processAndSave
       run: |
         curl https://raw.githubusercontent.com/CloudDefenseAI/cd/master/latest/cd-latest-linux-x64.tar.gz > /tmp/cd-latest-linux-x64.tar.gz
         tar -C /tmp -xzf /tmp/cd-latest-linux-x64.tar.gz
